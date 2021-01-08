@@ -296,6 +296,12 @@ sqsh -S <target>:1433 -U sa
 winPEAS.exe
 ```
 
+#### [Seatbelt](https://raw.githubusercontent.com/r3motecontrol/Ghostpack-CompiledBinaries/master/Seatbelt.exe)
+
+```
+Seatbelt.exe
+```
+
 #### [Sherlock](https://github.com/rasta-mouse/Sherlock/blob/master/Sherlock.ps1)
 
 ```
@@ -339,6 +345,12 @@ wes.py systeminfo.txt
 
 
 ### [Linux](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Linux%20-%20Privilege%20Escalation.md)
+
+#### [Linux Smart Enumeration](https://github.com/diego-treitos/linux-smart-enumeration/blob/master/lse.sh)
+
+```
+./lse.sh -l 1 -i
+```
 
 #### [LinEnum.sh](https://github.com/rebootuser/LinEnum/blob/master/LinEnum.sh)
 
@@ -388,6 +400,8 @@ https://github.com/ZephrFish/static-tools
 https://github.com/andrew-d/static-binaries
 
 https://github.com/interference-security/kali-windows-binaries
+
+https://github.com/r3motecontrol/Ghostpack-CompiledBinaries
 
 ## Compiled Exploits
 

@@ -33,10 +33,12 @@ fi
 | les                |
 | wesng              |
 | powerless          |
+| seatbelt           |
 | powerview          |
 | rsg                |
 | windapsearch       |
 | linenum.sh         |
+| lse.sh             |
 | winpeas            |
 | linpeas            |
 | volatility         |
@@ -44,6 +46,7 @@ fi
 | ghidra             |
 | sysinternals suite |
 | juicypotato        |
+| roguepotato        |
 | pwntools           |
 | z3-solver          |
 | randcrack          |
@@ -154,6 +157,10 @@ git clone https://github.com/bitsadmin/wesng
 # Install Powerless
 git clone https://github.com/M4ximuss/Powerless
 
+# Install Seatbelt
+mkdir Seatbelt
+wget https://raw.githubusercontent.com/r3motecontrol/Ghostpack-CompiledBinaries/master/Seatbelt.exe -O Seatbelt/Seatbelt.exe
+
 # Install Powerview
 mkdir powerview
 curl https://raw.githubusercontent.com/PowerShellMafia/PowerSploit/master/Recon/PowerView.ps1 > powerview/powerview.ps1
@@ -166,6 +173,9 @@ git clone https://github.com/ropnop/windapsearch
 
 # Install LinEnum.sh
 git clone https://github.com/rebootuser/LinEnum
+
+# Install Linux Smart Enumeraetion
+git clone https://github.com/diego-treitos/linux-smart-enumeration
 
 # Install winPEAS and linPEAS
 git clone https://github.com/carlospolop/privilege-escalation-awesome-scripts-suite
@@ -200,6 +210,7 @@ curl -s https://api.github.com/repos/DominicBreuker/pspy/releases/latest | grep 
 # Install potatoes
 mkdir potatoes
 curl -s https://api.github.com/repos/ohpe/juicy-potato/releases/latest | grep "browser_download_url.*exe" | cut -d : -f 2,3 | tr -d \" | wget -qi - -O potatoes/juicypotato.exe
+curl -s https://api.github.com/repos/antonioCoco/RoguePotato/releases/latest | grep "browser_download_url.*RoguePotato.zip\"" | cut -d : -f 2,3 | tr -d \" | wget -qi - -O potatoes/RoguePotato.zip && unzip potatoes/RoguePotato.zip -d potatoes && rm potatoes/RoguePotato.zip
 
 # Install pwntools
 python2 -m pip install pwntools
@@ -254,25 +265,34 @@ gunzip /usr/share/wordlists/rockyou.txt
 # Free RWX for all!
 chmod -R 777 /home/kali/Desktop/tools
 chmod -R 777 /home/kali/Desktop/exploits
+chmod -R 777 /home/kali/Desktop/web
 
 mkdir /home/kali/Desktop/web
 cd /home/kali/Desktop/web
+
 ln -s /home/kali/Desktop/tools/Empire/data/module_source/credentials/Invoke-Kerberoast.ps1 Invoke-Kerberoast.ps1
 ln -s /home/kali/Desktop/tools/nishang/Gather/Invoke-Mimikatz.ps1 Invoke-Mimikatz.ps1
-ln -s /home/kali/Desktop/tools/potatoes/juicypotato.exe juicypotato.exe
+ln -s /home/kali/Desktop/tools/nishang/Shells/Invoke-PowerShellTcp.ps1 Invoke-PowerShellTcp.ps1
+
 ln -s /home/kali/Desktop/tools/Powerless/Powerless.bat powerless.bat
-ln -s /home/kali/Desktop/tools/sysinternals sysinternals
 ln -s /home/kali/Desktop/tools/powerview/powerview.ps1 powerview.ps1
-ln -s /home/kali/Desktop/tools/LinEnum/LinEnum.sh linenum.sh
-ln -s /home/kali/Desktop/tools/privilege-escalation-awesome-scripts-suite/linPEAS/linpeas.sh linpeas.sh
 ln -s /home/kali/Desktop/tools/privilege-escalation-awesome-scripts-suite/winPEAS/winPEASbat/winPEAS.bat winpeas.bat
 ln -s /home/kali/Desktop/tools/privilege-escalation-awesome-scripts-suite/winPEAS/winPEASexe/winPEAS/bin/Obfuscated\ Releases/winPEASx86.exe winpeasx86.exe
 ln -s /home/kali/Desktop/tools/privilege-escalation-awesome-scripts-suite/winPEAS/winPEASexe/winPEAS/bin/Obfuscated\ Releases/winPEASx64.exe winpeasx64.exe
 ln -s /home/kali/Desktop/tools/privilege-escalation-awesome-scripts-suite/winPEAS/winPEASexe/winPEAS/bin/Obfuscated\ Releases/winPEASany.exe winpeasany.exe
+ln -s /home/kali/Desktop/tools/Sherlock/Sherlock.ps1 sherlock.ps1
+ln -s /home/kali/Desktop/tools/Seatbelt/Seatbelt.exe seatbelt.exe
+
+ln -s /home/kali/Desktop/tools/LinEnum/LinEnum.sh linenum.sh
+ln -s /home/kali/Desktop/tools/linux-smart-enumeration/lse.sh lse.sh
+ln -s /home/kali/Desktop/tools/privilege-escalation-awesome-scripts-suite/linPEAS/linpeas.sh linpeas.sh
 ln -s /home/kali/Desktop/tools/pspy/pspy32 pspy32
 ln -s /home/kali/Desktop/tools/pspy/pspy64 pspy64
-ln -s /home/kali/Desktop/tools/Sherlock/Sherlock.ps1 sherlock.ps1
-ln -s /home/kali/Desktop/tools/nishang/Shells/Invoke-PowerShellTcp.ps1 Invoke-PowerShellTcp.ps1
+
+ln -s /home/kali/Desktop/tools/potatoes/juicypotato.exe juicypotato.exe
+ln -s /home/kali/Desktop/tools/potatoes/RoguePotato.exe roguepotato.exe
+
+ln -s /home/kali/Desktop/tools/sysinternals sysinternals
 ln -s /home/kali/Desktop/binaries/windows-binaries/binaries/nc.exe nc.exe
 ln -s /home/kali/Desktop/binaries/windows-binaries/binaries/whoami.exe whoami.exe
 ln -s /home/kali/Desktop/binaries/windows-binaries/binaries/plink.exe plink.exe
