@@ -9,6 +9,7 @@ fi
 |     Tool name      |
 +--------------------+
 | docker-ce          |
+| rlwrap             |
 | code               |
 | gobuster           |
 | openjdk-11-jdk     |
@@ -61,7 +62,7 @@ fi
 '
 
 # Install manually:
-# Wappalyzer (https://addons.mozilla.org/en-US/firefox/addon/wappalyzer/
+# Wappalyzer (https://addons.mozilla.org/en-US/firefox/addon/wappalyzer/)
 # Cookie Quick Manager (https://addons.mozilla.org/en-US/firefox/addon/cookie-quick-manager/)
 # FoxyProxy Standard (https://addons.mozilla.org/en-US/firefox/addon/foxyproxy-standard/)
 
@@ -84,6 +85,7 @@ searchsploit -u
 
 packagelist=(
 	docker-ce
+	rlwrap
 	code
 	gobuster
 	openjdk-11-jdk
@@ -299,6 +301,7 @@ ln -s /home/kali/Desktop/binaries/windows-binaries/mimikatz/Win32/mimilove.exe m
 chmod -R 777 /home/kali/Desktop/tools
 chmod -R 777 /home/kali/Desktop/exploits
 chmod -R 777 /home/kali/Desktop/web
+chmod -R 777 /home/kali/Desktop/binaries
 
 cd /home/kali/Desktop 
 
