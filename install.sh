@@ -262,11 +262,6 @@ git clone https://github.com/andrew-d/static-binaries
 # Unzip rockyou.txt
 gunzip /usr/share/wordlists/rockyou.txt
 
-# Free RWX for all!
-chmod -R 777 /home/kali/Desktop/tools
-chmod -R 777 /home/kali/Desktop/exploits
-chmod -R 777 /home/kali/Desktop/web
-
 mkdir /home/kali/Desktop/web
 cd /home/kali/Desktop/web
 
@@ -299,6 +294,11 @@ ln -s /home/kali/Desktop/binaries/windows-binaries/binaries/plink.exe plink.exe
 ln -s /home/kali/Desktop/binaries/windows-binaries/mimikatz/x64/mimikatz.exe mimikatz64.exe
 ln -s /home/kali/Desktop/binaries/windows-binaries/mimikatz/Win32/mimikatz.exe mimikatz32.exe
 ln -s /home/kali/Desktop/binaries/windows-binaries/mimikatz/Win32/mimilove.exe mimilove.exe
+
+# Free RWX for all!
+chmod -R 777 /home/kali/Desktop/tools
+chmod -R 777 /home/kali/Desktop/exploits
+chmod -R 777 /home/kali/Desktop/web
 
 cd /home/kali/Desktop 
 
