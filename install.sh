@@ -20,6 +20,7 @@ fi
 | cmake              |
 | mingw-w64          |
 | crowbar            |
+| mariadb-client     |
 | rustscan           |
 | pip2               |
 | pip3               |
@@ -96,6 +97,7 @@ packagelist=(
 	cmake
 	mingw-w64
     crowbar
+	mariadbclient
 )
 
 apt-get install -y ${packagelist[@]}
@@ -296,6 +298,18 @@ ln -s /home/kali/Desktop/binaries/windows-binaries/binaries/plink.exe plink.exe
 ln -s /home/kali/Desktop/binaries/windows-binaries/mimikatz/x64/mimikatz.exe mimikatz64.exe
 ln -s /home/kali/Desktop/binaries/windows-binaries/mimikatz/Win32/mimikatz.exe mimikatz32.exe
 ln -s /home/kali/Desktop/binaries/windows-binaries/mimikatz/Win32/mimilove.exe mimilove.exe
+
+# Command Shortcuts
+
+resolve() {
+	cat /etc/hosts | grep "$1" | cut -d " " -f 1 
+}
+
+superscan() {
+	name="$(resolve $1)"
+	rustscan -a "$name" -r 1-65535 -- -sT -sV -sC -Pn 
+}
+
 
 # Free RWX for all!
 chmod -R 777 /home/kali/Desktop/tools
