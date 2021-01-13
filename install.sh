@@ -301,15 +301,17 @@ ln -s /home/kali/Desktop/binaries/windows-binaries/mimikatz/Win32/mimilove.exe m
 
 # Command Shortcuts
 
+tee -a ~/.zshrc << END
+
 resolve() {
-	cat /etc/hosts | grep "$1" | cut -d " " -f 1 
+	cat /etc/hosts | grep "\$1" | cut -d " " -f 1 
 }
 
 superscan() {
-	name="$(resolve $1)"
-	rustscan -a "$name" -r 1-65535 -- -sT -sV -sC -Pn 
+	name="\$(resolve \$1)"
+	rustscan --accessible -a "\$name" -r 1-65535 -- -sT -sV -sC -Pn 
 }
-
+END
 
 # Free RWX for all!
 chmod -R 777 /home/kali/Desktop/tools
