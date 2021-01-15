@@ -109,7 +109,7 @@ usermod -aG docker kali
 
 # Install https://github.com/RustScan/RustScan
 docker pull rustscan/rustscan:2.0.0
-echo "alias rustscan='docker run -it --rm --name rustscan rustscan/rustscan:2.0.0'" | tee -a /home/kali/.zshrc /root/.zshrc
+echo "alias rustscan='docker run -it --network=host --rm --name rustscan rustscan/rustscan:2.0.0'" | tee -a /home/kali/.zshrc /root/.zshrc
 
 # Install pip2 and pip3
 
@@ -303,13 +303,9 @@ ln -s /home/kali/Desktop/binaries/windows-binaries/mimikatz/Win32/mimilove.exe m
 
 tee -a ~/.zshrc << END
 
-resolve() {
-	cat /etc/hosts | grep "\$1" | cut -d " " -f 1 
-}
-
 superscan() {
-	name="\$(resolve \$1)"
-	rustscan --accessible -a "\$name" -r 1-65535 -- -sT -sV -sC -Pn 
+	echo "rustscan --accessible -a \$1 -r 1-65535 -- -sT -sV -sC -Pn"
+	rustscan --accessible -a "\$1" -r 1-65535 -- -sT -sV -sC -Pn 
 }
 END
 
