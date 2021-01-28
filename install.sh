@@ -34,6 +34,7 @@ fi
 | sudo_killer        |
 | les                |
 | wesng              |
+| wes                |
 | powerless          |
 | seatbelt           |
 | powerview          |
@@ -157,6 +158,10 @@ git clone https://github.com/mzet-/linux-exploit-suggester
 
 # Install wesng
 git clone https://github.com/bitsadmin/wesng
+
+# Install WES
+git clone https://github.com/AonCyberLabs/Windows-Exploit-Suggester
+pip2 install xlrd==1.1.0
 
 # Install Powerless
 git clone https://github.com/M4ximuss/Powerless
