@@ -138,6 +138,9 @@ mv feroxbuster /usr/bin/feroxbuster
 # Install AutoRecon
 python3 -m pip install git+https://github.com/Tib3rius/AutoRecon.git
 
+# Install nmapAutomator
+git clone https://github.com/21y4d/nmapAutomator
+
 # Install Updog
 python3 -m pip install updog
 
