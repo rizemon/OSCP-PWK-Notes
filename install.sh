@@ -98,7 +98,7 @@ packagelist=(
 	cmake
 	mingw-w64
     crowbar
-	mariadbclient
+	mariadb-client
 )
 
 apt-get install -y ${packagelist[@]}
